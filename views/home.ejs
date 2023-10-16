@@ -8,11 +8,11 @@
     <body>
         <h1>Bem-vindo, <%= user.email %>!</h1>
         <form action="/home" method="post">
-            <label for="title">Nome</label>
-            <input type="text" name="title" id="title" required/>
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" id="nome" required/>
             <br>
-            <label for="content">Ingrediente</label>
-            <textarea name="content" id="content" cols="30" rows="10" required></textarea>
+            <label for="ingredientes">Ingrediente</label>
+            <textarea name="ingredientes" id="ingredientes" cols="30" rows="10" required></textarea>
             <br>
             <button type="submit">Adicionar</button>
         </form>
