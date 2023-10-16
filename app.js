@@ -1,4 +1,5 @@
 const express = require("express");
+const { get } = require("express/lib/response");
 
 const { getApps, initializeApp } = require("firebase/app");
 const { getAuth, signInWithEmailAndPassword } = require("firebase/auth");
@@ -63,7 +64,7 @@ app.get("/home", async (req, res) => {
   if (user) {
     res.render("home", { user: user });
   } else {
-    res.redirect("/feito");
+    res.redirect("/");
   }
 });
 
@@ -76,10 +77,20 @@ app.post("/home", async (req, res) => {
     console.log(req.body);
     console.log(receitas);
     const add = await addDoc(receitasRef, receitas);
+    res.redirect("/feito")
   } catch (error) {
     console.log(error);
     res.send(error);
   }
+ ;
 });
+
+app.get("/feito", async(req, res) => {
+  res.render("feito")
+  console.log(receitasRef);
+  const pegar  =  await get(receitasRef);
+  console.log(receitasRef);
+});
+
 
 app.listen(6969, () => console.log("Server started on port 6969"));
