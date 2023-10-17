@@ -102,7 +102,8 @@ app.get("/feito", async (req, res) => {
       arr.push(obj);
     });
     if (arr.length == 0) {
-      alert("Não tem receitas cadastradas");
+      res.render("feito", { arr: [] });
+      return;
     }
     res.render("feito", { arr });
   } catch (error) {

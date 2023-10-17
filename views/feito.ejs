@@ -10,6 +10,11 @@
         <h1>Feito</h1>
         <h1>aaa</h1>
         <ul>
+            <% if(arr.length == 0) {%>
+                
+                <h2>Não tem receitas</h2>
+
+            <% } %>
             <% arr.forEach(function(arr){%>
                 <li>
                     <%= arr.nome %>
