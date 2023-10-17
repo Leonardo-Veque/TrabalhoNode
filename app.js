@@ -75,19 +75,13 @@ app.post("/home", async (req, res) => {
       nome: req.body.nome,
     };
     const add = await addDoc(receitasRef, receitas);
-<<<<<<< HEAD
     res.redirect("/feito");
-=======
-    res.redirect("/feito")
->>>>>>> a18a222a2e03f1fa479e659ff9f293aa605c4ebd
   } catch (error) {
     console.log(error);
     res.send(error);
   }
- ;
 });
 
-<<<<<<< HEAD
 app.get("/feito", async (req, res) => {
   try {
     const pegar = await getDocs(receitasRef);
@@ -160,14 +154,3 @@ app.post("/delete/:id", async (req, res) => {
 });
 
 app.listen(6969, () => console.log("Server started on port 6969. Nice"));
-=======
-app.get("/feito", async(req, res) => {
-  res.render("feito")
-  console.log(receitasRef);
-  const pegar  =  await get(receitasRef);
-  console.log(receitasRef);
-});
-
-
-app.listen(6969, () => console.log("Server started on port 6969"));
->>>>>>> a18a222a2e03f1fa479e659ff9f293aa605c4ebd
