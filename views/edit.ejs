@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Home</title>
+    </head>
+
+    <body>
+        <h1>Feito</h1>
+        <h1>aaa</h1>
+        <form action="/update/<%= ingrediente.id %>" method="post" >
+            <label for="newName">Nome</label>
+            <input type="text" name="newName" id="newName" value="<%= ingrediente.nome %>" required/>
+            <br>
+            <label for="newIngredientes">Ingrediente</label>
+            <textarea name="newIngredientes" id="newIngredientes" cols="30" rows="10" required><%= ingrediente.ingredientes %></textarea>
+            <br>
+            <button type="submit">Editar</button>
+        </form>
+    </body>
+
+</html>

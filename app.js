@@ -2,10 +2,10 @@ const express = require("express");
 
 const { getApps, initializeApp } = require("firebase/app");
 const { getAuth, signInWithEmailAndPassword } = require("firebase/auth");
+const { getDoc } = require("firebase/firestore");
 const {
   collection,
   getDocs,
-  getDoc,
   doc,
   addDoc,
   updateDoc,
@@ -63,7 +63,7 @@ app.get("/home", async (req, res) => {
   if (user) {
     res.render("home", { user: user });
   } else {
-    res.redirect("/feito");
+    res.redirect("/");
   }
 });
 
@@ -73,13 +73,82 @@ app.post("/home", async (req, res) => {
       ingredientes: req.body.ingredientes,
       nome: req.body.nome,
     };
-    console.log(req.body);
-    console.log(receitas);
     const add = await addDoc(receitasRef, receitas);
+    res.redirect("/feito");
   } catch (error) {
     console.log(error);
     res.send(error);
   }
 });
 
-app.listen(6969, () => console.log("Server started on port 6969"));
+app.get("/feito", async (req, res) => {
+  try {
+    const pegar = await getDocs(receitasRef);
+    let arr = [];
+    pegar.forEach((doc) => {
+      let dt = doc.data();
+      let obj = {
+        ingredientes: dt.ingredientes,
+        nome: dt.nome,
+        id: doc.id,
+      };
+      arr.push(obj);
+    });
+    if (arr.length == 0) {
+      alert("Não tem receitas cadastradas");
+    }
+    res.render("feito", { arr });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.get("/:id/edit", async (req, res) => {
+  try {
+    const docRef = doc(db, "receita", req.params.id);
+    const pegar = await getDoc(docRef);
+    if (pegar.exists()) {
+      console.log(pegar.data());
+    } else {
+      alert("Não existe receitas");
+    }
+    const ingrediente = pegar.data();
+    ingrediente.id = pegar.id;
+    res.render("edit", { ingrediente });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.post("/update/:id", async (req, res) => {
+  try {
+    console.log("Aquii");
+    const docRef = doc(db, "receita", req.params.id);
+    const pegar = await getDoc(docRef);
+    const newName = req.body.newName;
+    const newIngrediente = req.body.newIngredientes;
+    console.log(req.body);
+
+    await updateDoc(docRef, {
+      nome: newName,
+      ingredientes: newIngrediente,
+    });
+    res.redirect("/feito");
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+app.post("/delete/:id", async (req, res) => {
+  try {
+    const docRef = doc(db, "receita", req.params.id);
+    await deleteDoc(docRef);
+    res.redirect("/feito");
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+});
+
+app.listen(6969, () => console.log("Server started on port 6969. Nice"));

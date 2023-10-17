@@ -7,7 +7,22 @@
 
     <body>
         <h1>Feito</h1>
-   
+        <h1>aaa</h1>
+        <ul>
+            <% arr.forEach(function(arr){%>
+                <li>
+                    <%= arr.nome %>
+                    <%= arr.ingredientes %>
+                    <a href="<%= arr.id %>/edit">Quer editar o post</a>
+                    <form action="/delete/<%=arr.id%>" method="post">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </li>
+            <% }); %>
+            <a href="/home">Criar receitas</a>
+        </ul>
     </body>
 
 </html>
+
+localhos:3000/update/3123123
